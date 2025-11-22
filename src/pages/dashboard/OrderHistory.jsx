@@ -12,7 +12,7 @@ const OrderHistory = () => {
     const [selectedStatus, setSelectedStatus] = useState('All');
     const [showStatusDropdown, setShowStatusDropdown] = useState(false);
 
-    const itemsPerPage = 5;  // ← Yeh line important hai
+    const itemsPerPage = 5;
 
     const orders = [
         { id: '#JS-123456', date: 'October 26, 2023', plan: 'USA - 10GB / 30 Days', price: '$29.99', status: 'Completed' },
@@ -27,7 +27,6 @@ const OrderHistory = () => {
         { id: '#JS-123447', date: 'October 8, 2023', plan: 'Japan - 10GB / 15 Days', price: '$39.99', status: 'Completed' },
     ];
 
-    // ← Yeh calculation add ki hai (main fix)
     const totalPages = Math.ceil(orders.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
@@ -46,32 +45,64 @@ const OrderHistory = () => {
         <div className="p-6 lg:p-10">
             <h2 className="text-4xl font-bold text-gray-900 mb-8">My Order History</h2>
 
-            {/* Filters same */}
+            {/* Filters */}
             <div className="bg-white rounded-2xl shadow-sm p-6 mb-8">
                 <div className="flex flex-col lg:flex-row gap-4">
                     <div className="flex-1 relative">
                         <Search className="absolute left-5 top-4 text-gray-400" size={20} />
-                        <input type="text" placeholder="Search by country or order ID" className="w-full pl-12 pr-6 py-4 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition" />
+                        <input 
+                            type="text" 
+                            placeholder="Search by country or order ID" 
+                            className="w-full pl-12 pr-6 py-4 bg-gray-50 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition" 
+                        />
                     </div>
-                    {/* Date Picker & Status Dropdown same */}
+
+                    {/* Date Picker */}
                     <div className="relative">
-                        <button onClick={() => setShowDatePicker(!showDatePicker)} className="px-6 py-4 bg-gray-50 rounded-xl flex items-center gap-3 whitespace-nowrap hover:bg-gray-100 transition">
-                            <Calendar size={20} /> {startDate && endDate ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}` : 'Date Range'}
+                        <button 
+                            onClick={() => setShowDatePicker(!showDatePicker)} 
+                            className="px-6 py-4 bg-gray-50 rounded-xl flex items-center gap-3 whitespace-nowrap hover:bg-gray-100 transition"
+                        >
+                            <Calendar size={20} /> 
+                            {startDate && endDate ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}` : 'Date Range'}
                         </button>
+
                         {showDatePicker && (
                             <div className="absolute top-full mt-2 z-50">
-                                <DatePicker selected={startDate} onChange={(dates) => { const [start, end] = dates; setStartDate(start); setEndDate(end); if (end) setShowDatePicker(false); }} startDate={startDate} endDate={endDate} selectsRange inline />
+                                <DatePicker 
+                                    selected={startDate} 
+                                    onChange={(dates) => { 
+                                        const [start, end] = dates; 
+                                        setStartDate(start); 
+                                        setEndDate(end); 
+                                        if (end) setShowDatePicker(false); 
+                                    }} 
+                                    startDate={startDate} 
+                                    endDate={endDate} 
+                                    selectsRange 
+                                    inline 
+                                />
                             </div>
                         )}
                     </div>
+
+                    {/* Status Dropdown */}
                     <div className="relative">
-                        <button onClick={() => setShowStatusDropdown(!showStatusDropdown)} className="px-6 py-4 bg-gray-50 rounded-xl flex items-center gap-3 whitespace-nowrap hover:bg-gray-100 transition">
+                        <button 
+                            onClick={() => setShowStatusDropdown(!showStatusDropdown)} 
+                            className="px-6 py-4 bg-gray-50 rounded-xl flex items-center gap-3 whitespace-nowrap hover:bg-gray-100 transition"
+                        >
                             Status: {selectedStatus} <ChevronDown size={20} />
                         </button>
+
                         {showStatusDropdown && (
                             <div className="absolute top-full mt-2 bg-white rounded-xl shadow-lg border w-full z-50">
                                 {['All', 'Completed', 'Pending', 'Failed'].map(status => (
-                                    <button key={status} onClick={() => { setSelectedStatus(status); setShowStatusDropdown(false); }} className="block w-full text-left px-6 py-3 hover:bg-gray-50 transition">
+                                    <button 
+                                        key={status} 
+                                        onClick={() => { setSelectedStatus(status); setShowStatusDropdown(false); }} 
+                                        className="block w-full text-left px-6 py-3 hover:bg-gray-50 transition"
+                                    >
                                         {status}
                                     </button>
                                 ))}
@@ -81,10 +112,12 @@ const OrderHistory = () => {
                 </div>
             </div>
 
-            {/* Table - Sirf current page ke orders dikhao */}
+            {/* TABLE SECTION (Horizontal scroll only inside table) */}
             <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full">
+                
+                {/* ← Scroll only here */}
+                <div className="w-full overflow-x-auto">
+                    <table className="min-w-[800px] w-full">
                         <thead className="bg-gray-50 border-b">
                             <tr>
                                 <th className="text-left font-medium text-gray-600 px-8 py-5">ORDER ID</th>
@@ -95,6 +128,7 @@ const OrderHistory = () => {
                                 <th className="text-right font-medium text-gray-600 px-8 py-5"></th>
                             </tr>
                         </thead>
+
                         <tbody>
                             {currentOrders.map((order) => (
                                 <tr key={order.id} className="border-b hover:bg-gray-50 transition">
@@ -118,26 +152,36 @@ const OrderHistory = () => {
                     </table>
                 </div>
 
-                {/* Pagination - Ab fully working */}
+                {/* Pagination */}
                 <div className="px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gray-50">
                     <div className="flex items-center gap-2">
-                        <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1}
-                            className="p-3 rounded-lg border hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                        <button 
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} 
+                            disabled={currentPage === 1}
+                            className="p-3 rounded-lg border hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                        >
                             <ChevronLeft size={20} />
                         </button>
 
                         {[...Array(totalPages)].map((_, i) => (
-                            <button key={i + 1} onClick={() => setCurrentPage(i + 1)}
-                                className={`px-4 py-2 rounded-lg transition ${currentPage === i + 1 ? 'bg-gray-900 text-white' : 'hover:bg-gray-200'}`}>
+                            <button 
+                                key={i + 1} 
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`px-4 py-2 rounded-lg transition ${currentPage === i + 1 ? 'bg-gray-900 text-white' : 'hover:bg-gray-200'}`}
+                            >
                                 {i + 1}
                             </button>
                         ))}
 
-                        <button onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} disabled={currentPage === totalPages}
-                            className="p-3 rounded-lg border hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                        <button 
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))} 
+                            disabled={currentPage === totalPages}
+                            className="p-3 rounded-lg border hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                        >
                             <ChevronRight size={20} />
                         </button>
                     </div>
+
                     <p className="text-gray-600">Page {currentPage} of {totalPages}</p>
                 </div>
             </div>

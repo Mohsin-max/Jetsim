@@ -82,12 +82,18 @@ const Login = () => {
                             </div>
 
                             {/* Submit Button */}
-                            <button
+                            <Link
+                                to={"/dashboard"}
+                                className="w-full block text-center bg-linear-to-r from-green-500 to-green-400 text-white font-bold py-4 rounded-xl transform hover:scale-102 transition duration-200 shadow-lg mt-8 cursor-pointer"
+                            >
+                                Login
+                            </Link>
+                            {/* <button
                                 type="submit"
                                 className="w-full bg-linear-to-r from-green-500 to-green-400 text-white font-bold py-4 rounded-xl transform hover:scale-102 transition duration-200 shadow-lg mt-8 cursor-pointer"
                             >
                                 Login
-                            </button>
+                            </button> */}
                         </form>
 
                         {/* Login Link */}
