@@ -55,7 +55,7 @@ const Landing = () => {
                             <a href="#" className="block text-gray-700 hover:text-green-600 text-lg">How It Works</a>
                             <a href="#" className="block text-gray-700 hover:text-green-600 text-lg">Why Choose Us</a>
                             <a href="#" className="block text-gray-700 hover:text-green-600 text-lg">Support</a>
-                            <button className="w-full mt-4 bg-green-600 text-white py-3 rounded-full font-semibold hover:bg-green-700 transition">
+                            <button className="w-full mt-4 bg-[#00d18b] text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition">
                                 Get Started
                             </button>
                         </div>

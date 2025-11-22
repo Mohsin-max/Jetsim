@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Payment = () => {
     const [currentStep, setCurrentStep] = useState('payment');
@@ -157,9 +158,9 @@ const Payment = () => {
                                             </div>
                                             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Purchase Complete!</h2>
                                             <p className="text-lg sm:text-xl text-gray-600 mb-10">Your eSIM has been sent to your email.</p>
-                                            <button className="bg-green-600 text-white px-12 py-4 rounded-xl font-semibold cursor-pointer text-lg hover:bg-green-700 transition shadow-lg">
+                                            <Link to={"/manage-esims"} className="bg-green-600 text-white px-12 py-4 rounded-xl font-semibold cursor-pointer text-lg hover:bg-green-700 transition shadow-lg">
                                                 Go to My eSIMs
-                                            </button>
+                                            </Link>
                                         </div>
                                     )}
                                 </div>
